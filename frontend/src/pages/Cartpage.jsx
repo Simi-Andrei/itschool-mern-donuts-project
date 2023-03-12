@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { BsArrowRight } from "react-icons/bs";
-import Title from "../components/Title";
-import PageWrapper from "../components/PageWrapper";
-import { removeItemFromCart } from "../features/cart/cartSlice";
+import { BsArrowRight, BsTrash } from "react-icons/bs";
+import { Title, PageWrapper } from "../components/index";
+import { removeItemFromCart, clearCart } from "../features/cart/cartSlice";
 
 const Cartpage = () => {
   const navigate = useNavigate();
@@ -12,28 +11,16 @@ const Cartpage = () => {
 
   const { cartItems } = useSelector((state) => state.cart);
 
-  const SuccessToast = ({ message }) => (
-    <div className="flex items-center justify-center">
-      <img
-        className="mr-2"
-        src="/images/successDoughnut.png"
-        alt="donut"
-        width={30}
-      />
-      <p>{message}</p>
-    </div>
-  );
-
   const removeItemFromCartHandler = (id) => {
     dispatch(removeItemFromCart(id));
-    toast(<SuccessToast message="Donut(s) removed from cart" />, {
+    toast.success("Product removed from cart", {
       position: "top-center",
       autoClose: 2000,
     });
   };
 
   const checkoutHandler = () => {
-    navigate(`/login?redirect=${"/delivery"}`);
+    navigate(`/login?redirect=${"/checkout"}`);
   };
 
   const itemsPrice = cartItems.reduce(
@@ -43,28 +30,29 @@ const Cartpage = () => {
   const deliveryPrice = itemsPrice > 25 ? 0 : 25;
   const totalPrice = itemsPrice + deliveryPrice;
 
+  const clearCartHandler = () => {
+    dispatch(clearCart());
+    toast.success("Products removed from cart", {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  };
+
   return (
     <PageWrapper>
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap justify-between items-start">
         {cartItems.length === 0 ? (
-          <div className="h-64 w-full flex flex-col items-center justify-center">
+          <div className="bg-white h-64 w-full flex flex-col items-center justify-center shadow-sm shadow-stone-200">
             <div className="flex flex-col lg:flex-row items-center">
-              <p className="mr-4 text-xl tracking-tighter text-center">
-                You have no <span className="text-tertiary">donuts</span> in
-                your cart right now
+              <p className="mr-4 tracking-tighter text-center">
+                You have no products in your cart right now
               </p>
-              <img
-                src="/images/errorDoughnut.png"
-                width={50}
-                alt="donut"
-                className="my-2"
-              />
             </div>
             <Link
-              to="/products"
-              className="bg-secondary border border-secondary text-white font-light my-4 py-2 px-8 tracking-widest hover:text-secondary hover:bg-white transition-all duration-200 flex items-center relative group"
+              to="/categories"
+              className="bg-secondary uppercase border border-secondary text-white font-light my-4 py-2 px-8 tracking-widest hover:text-secondary hover:bg-white transition-all duration-200 flex items-center relative group rounded-sm text-sm"
             >
-              GET SOME DONUTS
+              Back to shop
               <span className="absolute top-1/2 -translate-y-1/2 right-2 opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-200 text-secondary">
                 <BsArrowRight />
               </span>
@@ -72,33 +60,47 @@ const Cartpage = () => {
           </div>
         ) : (
           <>
-            <div className="w-full md:w-7/12">
-              <Title text="Your donuts" />
+            <div className="w-full md:w-[70.8%]">
+              <div className="relative">
+                <Title text="Cart" className="pl-16" />
+                <button
+                  className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
+                  onClick={() => navigate(-1)}
+                >
+                  Back
+                </button>
+              </div>
               {cartItems.map((item) => (
                 <div
                   key={item._id}
-                  className="flex items-center justify-between mt-4 pb-4 border-b border-b-secondary last:border-b-0 text-sm lg:text-base"
+                  className="flex items-center justify-between mt-1 p-2 text-xs xl:text-sm bg-white shadow-sm shadow-stone-200"
                 >
-                  <div className="w-2/12 grid place-items-start">
-                    <img src={item.image} alt="doughnut" width={50} />
+                  <div className="w-[20%] md:w-[25%] grid place-items-center">
+                    <img src={item.image} alt="product" width={50} />
                   </div>
-                  <div className="w-3/12 grid place-items-start">
+                  <div className="w-[40%] md:w-[30%] text-center">
                     <Link
                       className="hover:underline"
-                      to={`/products/${item._id}`}
+                      to={`/product/${item._id}`}
                     >
                       {item.name}
                     </Link>
                   </div>
-                  <div className="w-4/12 flex items-center justify-center">
-                    <p className="font-semibold">
-                      {item.quantity} x {item.price} = $
-                      {(item.quantity * item.price).toFixed(2)}
+                  <div className="w-[30%] md:w-[25%] text-center justify-center">
+                    <p>
+                      ${(item.quantity * item.price).toFixed(2)} (x
+                      {item.quantity})
                     </p>
                   </div>
-                  <div className="w-3/12 grid place-items-end">
+                  <div className="w-[10%] md:w-[20%] flex items-center justify-center">
                     <button
-                      className="bg-tertiary text-white py-1 px-4 hover:opacity-90 disabled:opacity-50"
+                      className="bg-stone-900 md:hidden text-white p-2 md:px-4 rounded-sm hover:brightness-95 disabled:opacity-50"
+                      onClick={() => removeItemFromCartHandler(item._id)}
+                    >
+                      <BsTrash />
+                    </button>
+                    <button
+                      className="hidden md:block bg-white text-stone-900 py-1 px-1 md:px-4 rounded-sm hover:bg-stone-200 disabled:opacity-50"
                       onClick={() => removeItemFromCartHandler(item._id)}
                     >
                       Remove
@@ -106,32 +108,43 @@ const Cartpage = () => {
                   </div>
                 </div>
               ))}
+              <div className="text-xs xl:text-sm">
+                <button
+                  className="w-full bg-secondary text-white shadow-sm shadow-stone-200 mt-1 tracking-tighter py-2 px-4 hover:brightness-95 disabled:opacity-50 rounded-sm"
+                  onClick={clearCartHandler}
+                >
+                  Empty cart
+                </button>
+              </div>
             </div>
-            <div className="w-full md:w-4/12">
-              <Title text="Your total" />
+            <div className="w-full mt-1 md:mt-0 md:w-[28.8%]">
+              <Title text="Total" />
               {cartItems.length > 0 && (
-                <div className="flex flex-col text-sm lg:text-base">
+                <div className="flex flex-col mt-1 p-2 text-xs xl:text-sm bg-white shadow-sm shadow-stone-200">
                   <div className="flex items-center justify-between my-2">
                     <p>Products price:</p>
-                    <p>${itemsPrice.toFixed(2)}</p>
+                    <p className="font-semibold">${itemsPrice.toFixed(2)}</p>
                   </div>
                   <div className="flex flex-col border-b border-b-secondary pb-2">
                     <div className="flex items-center justify-between">
                       <p>Delivery price:</p>
-                      <p>${deliveryPrice.toFixed(2)}</p>
+                      <p className="font-semibold">
+                        ${deliveryPrice.toFixed(2)}
+                      </p>
                     </div>
-                    <p className="italic text-xxs lg:text-xs tracking-wide">
+                    <p className="italic text-xxs xl:text-xs">
                       (free delivery for orders above $50)*
                     </p>
                   </div>
-                  <div className="flex items-center justify-between font-bold mt-2">
+                  <div className="flex items-center justify-between font-semibold mt-2">
                     <p>Total price:</p>
                     <p>${totalPrice.toFixed(2)}</p>
                   </div>
                   <div>
                     <button
                       onClick={checkoutHandler}
-                      className="w-full bg-tertiary text-white py-2 px-4 hover:opacity-90 disabled:opacity-50 mt-4"
+                      className="w-full bg-stone-900 text-white py-2 px-4 hover:bg-stone-800 disabled:opacity-50 mt-4"
+                      disabled={cartItems.length === 0}
                     >
                       Checkout
                     </button>
@@ -139,14 +152,6 @@ const Cartpage = () => {
                 </div>
               )}
             </div>
-            {/* <div className="w-full mt-10 md:mt-20 grid place-items-center">
-            <img
-              src="/images/doughnutsWithCrumbs.png"
-              alt="donuts"
-              width={200}
-              className=""
-            />
-          </div> */}
           </>
         )}
       </div>

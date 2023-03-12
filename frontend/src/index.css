@@ -13,6 +13,11 @@
 body {
   font-family: "Rubik", sans-serif;
   color: #120a02;
+  background-color: #fafaf9;
+}
+
+.category-item {
+  background: linear-gradient(45deg, #aa8d48 0%, #d4be8a 100%);
 }
 
 .form-input:focus ~ .form-label,
@@ -31,8 +36,4 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   color: #262626;
-}
-
-.product:hover span {
-  width: 100%;
 }

@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ClipLoader } from "react-spinners";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
-import Title from "../components/Title";
-import PageWrapper from "../components/PageWrapper";
+import { Loader, PageWrapper } from "../components/index";
 import { getProfile, updateProfile, reset } from "../features/user/userSlice";
 import { getOrders } from "../features/order/orderSlice";
 
@@ -29,42 +27,18 @@ const Profilepage = () => {
     message: messageOrders,
   } = useSelector((state) => state.order);
 
-  const ErrorToast = ({ text }) => (
-    <div className="flex items-center justify-center">
-      <img
-        className="mr-2"
-        src="/images/errorDoughnut.png"
-        alt="donut"
-        width={30}
-      />
-      <p>{message || text}</p>
-    </div>
-  );
-
-  const SuccessToast = ({ text }) => (
-    <div className="flex items-center justify-center">
-      <img
-        className="mr-2"
-        src="/images/successDoughnut.png"
-        alt="donut"
-        width={30}
-      />
-      <p>{text}</p>
-    </div>
-  );
-
   useEffect(() => {
     dispatch(reset());
     dispatch(getOrders());
     if (!currentUser) {
       navigate("/login");
     } else if (error) {
-      toast(<ErrorToast />, {
+      toast.error(message, {
         position: "top-center",
         autoClose: 2000,
       });
     } else if (success) {
-      toast(<SuccessToast text="Profile updated" />, {
+      toast.success("Profile updated", {
         position: "top-center",
         autoClose: 2000,
       });
@@ -76,12 +50,12 @@ const Profilepage = () => {
         setEmail(currentUser.email);
       }
     }
-  }, [dispatch, currentUser, navigate, error, success]);
+  }, [dispatch, currentUser, navigate, error, success, message]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast(<ErrorToast text="Passwords don't match" />, {
+      toast.error("Passwords don't match", {
         position: "top-center",
         autoClose: 2000,
       });
@@ -93,24 +67,22 @@ const Profilepage = () => {
   return (
     <PageWrapper>
       <div className="flex flex-wrap justify-between">
-        <div className="w-full lg:w-4/12 p-2">
-          <Title text="Profile" />
+        <div className="w-full lg:w-[23.3%]">
           <form
             onSubmit={submitHandler}
             autoComplete="off"
-            className="w-3/4 mx-auto md:w-64"
+            className="bg-white shadow-sm shadow-stone-200 w-full text-sm p-2 xl:p-4"
           >
             {loading ? (
-              <div className="w-full text-center mt-40">
-                <ClipLoader />
-              </div>
+              <Loader />
             ) : error ? (
-              <div className="w-full text-center mt-40">
+              <div className="w-full mt-40 text-center">
                 <p>{message}</p>
               </div>
             ) : (
               <>
-                <div className="form-group my-8 relative">
+                <h2 className="uppercase mb-3 text-base">Edit profile</h2>
+                <div className="form-group relative mt-11">
                   <input
                     className="form-input bg-transparent border-b border-b-cream pt-2 focus:outline-none w-full"
                     type="text"
@@ -178,9 +150,9 @@ const Profilepage = () => {
                     Confirm Password
                   </label>
                 </div>
-                <div className="text-sm lg:text-base">
+                <div className="text-xs xl:text-sm">
                   <button
-                    className="w-full bg-tertiary text-white py-2 px-4 hover:opacity-90 disabled:opacity-50 mt-4"
+                    className="w-full bg-stone-900 text-white py-2 px-4 hover:brightness-95 disabled:opacity-50 mt-4"
                     type="submit"
                     disabled={!name && !email && !password && !confirmPassword}
                   >
@@ -193,25 +165,22 @@ const Profilepage = () => {
                 </div>
               </>
             )}
-            <img src="/images/doughnutsOnPlate.png" alt="donuts on plate" />
           </form>
         </div>
-        <div className="w-full lg:w-8/12 p-2">
-          <Title text="My orders" />
+        <div className="w-full lg:w-[76.3%]">
           {loadingOrders ? (
-            <div className="w-full text-center mt-20">
-              <ClipLoader />
-            </div>
+            <Loader />
           ) : errorOrders ? (
             <div className="w-full text-center mt-20">
               <p>{messageOrders}</p>
             </div>
           ) : (
-            <div className="flex flex-col">
+            <div className="flex flex-col bg-white shadow-sm shadow-stone-200 w-full text-xs xl:text-sm p-2 xl:p-4 mt-1 md:mt-0">
+              <h2 className="uppercase mb-3 text-base">My orders</h2>
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                   <div className="overflow-hidden">
-                    <table className="min-w-full text-left text-sm font-light">
+                    <table className="min-w-full text-left text-xs xl:text-sm font-light">
                       <thead className="border-b font-medium">
                         <tr>
                           <th scope="col" className="px-6 py-4">
@@ -242,14 +211,14 @@ const Profilepage = () => {
                               {order.isPaid ? (
                                 <FaCheck className="text-green-400" />
                               ) : (
-                                <FaTimes className="text-red-400" />
+                                <FaTimes className="text-rose-400" />
                               )}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">
                               {order.isDelivered ? (
                                 order.deliveredAt.substring(0, 10)
                               ) : (
-                                <FaTimes className="text-red-400" />
+                                <FaTimes className="text-rose-400" />
                               )}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">

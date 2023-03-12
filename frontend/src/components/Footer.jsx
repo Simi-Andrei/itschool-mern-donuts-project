@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <footer className="flex items-center justify-center py-2 px-4 border-t border-t-gray-100">
-      <p className="text-center text-sm font-light">
-        App created and designed by SimiAndrei &copy; 2023 | All rights reserved
+    <footer className="bg-white h-10 flex items-center justify-center px-4 border-t border-t-stone-200">
+      <p className="text-center text-xs md:text-sm">
+        Copyright &copy; 2023 | All rights reserved
       </p>
     </footer>
   );

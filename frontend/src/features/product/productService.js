@@ -1,8 +1,10 @@
 import axios from "axios";
 
 // get all products
-const getAllProducts = async () => {
-  const { data } = await axios.get("/api/products");
+const getAllProducts = async ({ category = "", order = "" }) => {
+  const { data } = await axios.get(
+    `/api/products?category=${category}&order=${order}`
+  );
   return data;
 };
 
@@ -45,12 +47,26 @@ const getTopProducts = async () => {
   return data;
 };
 
+// get product categories
+const getProductCategories = async () => {
+  const { data } = await axios.get("/api/products/categories");
+  return data;
+};
+
+// get product categories
+const getProductsByCategory = async (category) => {
+  const { data } = await axios.get(`/api/products/category/${category}`);
+  return data;
+};
+
 const productService = {
   getSingleProduct,
   getAllProducts,
   updateProduct,
   deleteProduct,
   getTopProducts,
+  getProductCategories,
+  getProductsByCategory,
 };
 
 export default productService;

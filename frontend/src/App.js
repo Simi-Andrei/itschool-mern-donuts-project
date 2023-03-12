@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Homepage from "./pages/Homepage";
-import Productspage from "./pages/Productspage";
+import Categoriespage from "./pages/Categoriespage";
+import Searchpage from "./pages/Searchpage";
 import Favoritespage from "./pages/Favoritespage";
 import Productpage from "./pages/Productpage";
 import Cartpage from "./pages/Cartpage";
-import Deliverypage from "./pages/Deliverypage";
-import Paymentpage from "./pages/Paymentpage";
+import Checkoutpage from "./pages/Checkoutpage";
 import Placeorderpage from "./pages/Placeorderpage";
 import Orderpage from "./pages/Orderpage";
 import Profilepage from "./pages/Profilepage";
@@ -18,6 +18,7 @@ import Usereditpage from "./pages/Usereditpage";
 import Productslistpage from "./pages/Productslistpage";
 import Producteditpage from "./pages/Producteditpage";
 import Orderslistpage from "./pages/Orderslistpage";
+import Notfoundpage from "./pages/Notfoundpage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -46,15 +47,23 @@ const App = () => {
           <Router>
             <div className="flex flex-col min-h-screen">
               <Header />
-              <main className="flex-1 w-full md:container mx-auto py-4 md:p-4 mt-20 md:mt-14">
+              <main className="flex-1 rounded-sm bg-stone-50 w-full lg:w-8/12 mx-auto mt-28 md:mt-20 mb-4">
                 <Routes>
                   <Route path="/" element={<Homepage />} />
-                  <Route path="/products" element={<Productspage />} />
+                  <Route
+                    path="/search/category/:category"
+                    element={<Searchpage />}
+                  />
+                  <Route path="/search/order/:order" element={<Searchpage />} />
+                  <Route
+                    path="/search/category/:category/order/:order"
+                    element={<Searchpage />}
+                  />
+                  <Route path="/categories" element={<Categoriespage />} />
                   <Route path="/favorites" element={<Favoritespage />} />
-                  <Route path="/products/:id" element={<Productpage />} />
+                  <Route path="/product/:id" element={<Productpage />} />
                   <Route path="/cart" element={<Cartpage />} />
-                  <Route path="/delivery" element={<Deliverypage />} />
-                  <Route path="/payment" element={<Paymentpage />} />
+                  <Route path="/checkout" element={<Checkoutpage />} />
                   <Route path="/place-order" element={<Placeorderpage />} />
                   <Route path="/orders/:id" element={<Orderpage />} />
                   <Route path="/profile" element={<Profilepage />} />
@@ -74,6 +83,7 @@ const App = () => {
                     element={<Producteditpage />}
                   />
                   <Route path="/admin/orders" element={<Orderslistpage />} />
+                  <Route path="*" element={<Notfoundpage />} />
                 </Routes>
               </main>
               <Footer />

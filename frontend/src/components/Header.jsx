@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { BsChevronDown, BsHandbag, BsHeart } from "react-icons/bs";
+import { BsChevronDown, BsHeart } from "react-icons/bs";
+import { RiShoppingCartLine } from "react-icons/ri";
 import { logout, reset } from "../features/user/userSlice";
+import { getProductCategories } from "../features/product/productSlice";
 
 const Header = () => {
-  const [navOpen, setNavOpen] = useState(false);
+  const [accMenuOpen, setAccMenuOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,6 +24,10 @@ const Header = () => {
     0
   );
 
+  useEffect(() => {
+    dispatch(getProductCategories());
+  }, [dispatch]);
+
   const logoutHandler = () => {
     dispatch(logout());
     dispatch(reset());
@@ -29,24 +35,24 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-white w-full fixed top-0 left-0 z-50">
-      <nav className="container mx-auto flex flex-col md:flex-row items-center justify-between p-4">
+    <div className="bg-stone-900 text-white w-full fixed top-0 left-0 z-50">
+      <nav className="w-full lg:w-8/12 mx-auto flex flex-col md:flex-row items-center justify-between p-4">
         <Link
           to="/"
-          className="font-bold tracking-wider text-xl md:text-2xl mb-5 md:mb-0"
+          className="tracking-tighter text-xl md:text-2xl mb-5 md:mb-0"
         >
-          d<span className="text-tertiary">o</span>nuts
+          tech<span className="text-secondary">i</span>e
         </Link>
-        <ul className="flex items-center text-sm font-light">
+        <ul className="flex items-center text-xs md:text-sm font-light">
           <li className="ml-4">
             <Link to="/">Home</Link>
           </li>
           <li className="ml-4">
-            <Link to="/products">Products</Link>
+            <Link to="/categories">Products</Link>
           </li>
           <li className="ml-4 mr-2 relative">
             <Link to="/cart">
-              <BsHandbag />
+              <RiShoppingCartLine className="text-lg" />
             </Link>
             <span className="absolute text-xs -top-3 -right-3.5 rounded-full w-5 h-5 grid place-items-center bg-secondary pointer-events-none text-white">
               {cartItemsCount}
@@ -54,7 +60,7 @@ const Header = () => {
           </li>
           <li className="ml-4 mr-2 relative">
             <Link to="/favorites">
-              <BsHeart />
+              <BsHeart className="text-lg" />
             </Link>
             <span className="absolute text-xs -top-3 -right-3.5 rounded-full w-5 h-5 grid place-items-center bg-secondary pointer-events-none text-white">
               {favoriteItems.length}
@@ -64,56 +70,54 @@ const Header = () => {
             <li className="ml-4">
               <div className="relative">
                 <button
-                  onClick={() => setNavOpen(!navOpen)}
+                  onClick={() => setAccMenuOpen(!accMenuOpen)}
                   className="flex items-center justify-evenly w-full focus:outline-none"
                 >
                   Account
                   <BsChevronDown
                     className={`ml-1 transition-all duration-150 ${
-                      navOpen && "rotate-180"
+                      accMenuOpen && "rotate-180"
                     }`}
                   />
                 </button>
-                {navOpen && (
-                  <ul className="absolute shadow-md w-28 top-8 right-0 text-right bg-white">
-                    <li className="border-b border-b-gray-100">
-                      <p
-                        className="capitalize cursor-default block w-full py-2 px-4 text-sm text-tertiary"
-                        data-te-dropdown-item-ref
-                      >
-                        {currentUser && currentUser.name}
-                      </p>
-                    </li>
-                    <li onClick={() => setNavOpen(!navOpen)}>
+                {accMenuOpen && (
+                  <ul className="absolute shadow-md w-36 top-8 -right-4 text-right bg-white text-stone-900 p-2">
+                    <p
+                      className="capitalize cursor-default block w-full py-2 px-4 text-sm text-stone-900 font-semibold"
+                      data-te-dropdown-item-ref
+                    >
+                      {currentUser && currentUser.name}
+                    </p>
+                    <li onClick={() => setAccMenuOpen(!accMenuOpen)}>
                       <Link
-                        className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white transition duration-100"
+                        className="block w-full py-2 px-4 text-sm hover:bg-stone-100 rounded-md transition duration-100"
                         to="/profile"
                         data-te-dropdown-item-ref
                       >
                         Profile
                       </Link>
                     </li>
-                    <li onClick={() => setNavOpen(!navOpen)}>
+                    <li onClick={() => setAccMenuOpen(!accMenuOpen)}>
                       <Link
-                        className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white transition duration-100"
+                        className="block w-full py-2 px-4 text-sm hover:bg-stone-100 rounded-md transition duration-100"
                         to="/admin/users"
                         data-te-dropdown-item-ref
                       >
                         Users
                       </Link>
                     </li>
-                    <li onClick={() => setNavOpen(!navOpen)}>
+                    <li onClick={() => setAccMenuOpen(!accMenuOpen)}>
                       <Link
-                        className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white transition duration-100"
+                        className="block w-full py-2 px-4 text-sm hover:bg-stone-100 rounded-md transition duration-100"
                         to="/admin/products"
                         data-te-dropdown-item-ref
                       >
                         Products
                       </Link>
                     </li>
-                    <li onClick={() => setNavOpen(!navOpen)}>
+                    <li onClick={() => setAccMenuOpen(!accMenuOpen)}>
                       <Link
-                        className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white transition duration-100"
+                        className="block w-full py-2 px-4 text-sm hover:bg-stone-100 rounded-md transition duration-100 mb-1"
                         to="/admin/orders"
                         data-te-dropdown-item-ref
                       >
@@ -121,12 +125,12 @@ const Header = () => {
                       </Link>
                     </li>
                     <li
-                      onClick={() => setNavOpen(!navOpen)}
+                      onClick={() => setAccMenuOpen(!accMenuOpen)}
                       className="border-t border-t-gray-100"
                     >
                       <button
                         onClick={logoutHandler}
-                        className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white transition duration-100 text-right"
+                        className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white rounded-md transition duration-100 text-right mt-1"
                         href="#"
                         data-te-dropdown-item-ref
                       >
@@ -143,29 +147,27 @@ const Header = () => {
               <li className="ml-4">
                 <div className="relative">
                   <button
-                    onClick={() => setNavOpen(!navOpen)}
+                    onClick={() => setAccMenuOpen(!accMenuOpen)}
                     className="flex items-center justify-evenly w-full"
                   >
                     Account
                     <BsChevronDown
                       className={`ml-1 transition-all duration-150 ${
-                        navOpen && "rotate-180"
+                        accMenuOpen && "rotate-180"
                       }`}
                     />
                   </button>
-                  {navOpen && (
-                    <ul className="absolute shadow-md w-28 top-6 right-0 text-right bg-white">
-                      <li className="border-b border-b-gray-100">
-                        <p
-                          className="capitalize cursor-default block w-full py-2 px-4 text-sm text-tertiary"
-                          data-te-dropdown-item-ref
-                        >
-                          {currentUser && currentUser.name}
-                        </p>
-                      </li>
-                      <li onClick={() => setNavOpen(!navOpen)}>
+                  {accMenuOpen && (
+                    <ul className="absolute shadow-md w-36 top-8 -right-4 text-right bg-white text-stone-900 p-2">
+                      <p
+                        className="capitalize cursor-default block w-full py-2 px-4 text-sm text-stone-900 font-semibold"
+                        data-te-dropdown-item-ref
+                      >
+                        {currentUser && currentUser.name}
+                      </p>
+                      <li onClick={() => setAccMenuOpen(!accMenuOpen)}>
                         <Link
-                          className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white transition duration-100"
+                          className="block w-full py-2 px-4 text-sm hover:bg-stone-100 rounded-md transition duration-100 mb-1"
                           to="/profile"
                           data-te-dropdown-item-ref
                         >
@@ -173,12 +175,12 @@ const Header = () => {
                         </Link>
                       </li>
                       <li
-                        onClick={() => setNavOpen(!navOpen)}
+                        onClick={() => setAccMenuOpen(!accMenuOpen)}
                         className="border-t border-t-gray-100"
                       >
                         <button
                           onClick={logoutHandler}
-                          className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white transition duration-100 text-right"
+                          className="block w-full py-2 px-4 text-sm hover:bg-secondary hover:text-white rounded-md transition duration-100 text-right mt-1"
                           href="#"
                           data-te-dropdown-item-ref
                         >

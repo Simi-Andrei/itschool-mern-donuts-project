@@ -13,6 +13,12 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/user", function (req, res) {
+  console.log("Name: ", req.query.name);
+  console.log("Age:", req.query.age);
+  res.send();
+});
+
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);

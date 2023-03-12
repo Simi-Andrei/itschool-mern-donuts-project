@@ -4,7 +4,9 @@ import productService from "./productService";
 const initialState = {
   products: [],
   topProducts: [],
+  productsByCategory: [],
   product: {},
+  categories: [],
   loading: false,
   success: false,
   error: false,
@@ -14,9 +16,9 @@ const initialState = {
 // get all products
 export const getAllProducts = createAsyncThunk(
   "products/getAllProducts",
-  async (_, thunkAPI) => {
+  async ({ category, order }, thunkAPI) => {
     try {
-      return await productService.getAllProducts();
+      return await productService.getAllProducts({ category, order });
     } catch (error) {
       const message =
         (error.response &&
@@ -103,6 +105,42 @@ export const getTopProducts = createAsyncThunk(
   }
 );
 
+// get products categories
+export const getProductCategories = createAsyncThunk(
+  "product/getProductCategories",
+  async (_, thunkAPI) => {
+    try {
+      return await productService.getProductCategories();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// get products by category
+export const getProductsByCategory = createAsyncThunk(
+  "product/getProductsByCategory",
+  async (category, thunkAPI) => {
+    try {
+      return await productService.getProductsByCategory(category);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -174,6 +212,30 @@ export const productSlice = createSlice({
         state.topProducts = action.payload;
       })
       .addCase(getTopProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.message = action.payload;
+      })
+      .addCase(getProductCategories.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProductCategories.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categories = action.payload;
+      })
+      .addCase(getProductCategories.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.message = action.payload;
+      })
+      .addCase(getProductsByCategory.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getProductsByCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productsByCategory = action.payload;
+      })
+      .addCase(getProductsByCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.message = action.payload;

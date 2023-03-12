@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import Title from "../components/Title";
-import PageWrapper from "../components/PageWrapper";
-import BackButton from "../components/BackButton";
+import { Loader, PageWrapper } from "../components/index";
 import {
   getSingleProduct,
   updateProduct,
@@ -29,24 +26,16 @@ const Producteditpage = () => {
 
   const dispatch = useDispatch();
 
-  const SuccessToast = ({ text }) => (
-    <div className="flex items-center justify-center">
-      <img
-        className="mr-2"
-        src="/images/successDoughnut.png"
-        alt="donut"
-        width={30}
-      />
-      <p>{text}</p>
-    </div>
-  );
-
   useEffect(() => {
     if (currentUser && !currentUser.isAdmin) {
       navigate("/login");
     } else if (success) {
       dispatch(reset());
       navigate("/admin/products");
+      toast.success("Product updated", {
+        position: "top-center",
+        autoClose: 2000,
+      });
     } else {
       if (!product.name || product._id !== id) {
         dispatch(getSingleProduct(id));
@@ -63,28 +52,23 @@ const Producteditpage = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(updateProduct({ _id: id, name, price, description, stock, sold }));
-    toast(<SuccessToast text="Product updated" />, {
-      position: "top-center",
-      autoClose: 2000,
-    });
   };
 
   return (
     <PageWrapper>
-      <BackButton />
-      <Title text="Edit products" />
-      <div className="flex items-center justify-center mt-4">
+      <div className="flex flex-col items-center justify-center mt-4">
+        <h2 className="bg-white p-2 text-center uppercase mt-20 w-64 shadow-sm shadow-stone-200 h-10">
+          Edit product
+        </h2>
         <form
           onSubmit={submitHandler}
           autoComplete="off"
-          className="w-64 text-sm lg:text-base"
+          className="bg-white mt-1 shadow-sm shadow-stone-200 w-64 text-sm lg:text-base p-2 lg:p-4"
         >
           {loading ? (
-            <div className="w-full text-center mt-40">
-              <ClipLoader />
-            </div>
+            <Loader />
           ) : error ? (
-            <div className="w-full text-center mt-40">
+            <div className="w-full mt-40 text-center">
               <p>{message}</p>
             </div>
           ) : (
@@ -193,7 +177,7 @@ const Producteditpage = () => {
               </div>
               <div className="text-sm lg:text-base">
                 <button
-                  className="w-full bg-tertiary text-white py-2 px-4 hover:opacity-90 disabled:opacity-50 mt-4"
+                  className="w-full bg-stone-900 text-white py-2 px-4 hover:brightness-95 disabled:opacity-50 mt-4"
                   type="submit"
                 >
                   Update

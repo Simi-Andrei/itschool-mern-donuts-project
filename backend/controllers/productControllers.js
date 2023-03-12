@@ -3,7 +3,20 @@ const asyncHandler = require("express-async-handler");
 
 // get all products
 const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const category = req.query.category || "";
+  const { order } = req.query || "";
+
+  const categoryFilter = category ? { category } : {};
+  const sortOrder =
+    order === "low"
+      ? { price: 1 }
+      : order === "high"
+      ? { price: -1 }
+      : order === "rated"
+      ? { rating: -1 }
+      : { _id: 1 };
+
+  const products = await Product.find({ ...categoryFilter }).sort(sortOrder);
   res.status(200).json(products);
 });
 
@@ -20,17 +33,40 @@ const getSingleProduct = asyncHandler(async (req, res) => {
   res.status(200).json(product);
 });
 
+// get products by category
+const getProductsByCategory = asyncHandler(async (req, res) => {
+  const { category } = req.params;
+
+  const products = await Product.find({ category });
+
+  if (!products) {
+    res.status(404);
+    throw new Error("Products not found");
+  }
+
+  res.status(200).json(products);
+});
+
 // create product
 const createProduct = asyncHandler(async (req, res) => {
-  const { name, description, price, stock, image, sold } = req.body;
+  const { name, category, description, price, stock, image, sold } = req.body;
 
-  if (!name || !description || !price || !stock || !image || !sold) {
+  if (
+    !name ||
+    !category ||
+    !description ||
+    !price ||
+    !stock ||
+    !image ||
+    !sold
+  ) {
     res.status(400);
     throw new Error("Please fill in all the fields");
   }
 
   const newProduct = await Product.create({
     name,
+    category,
     description,
     price,
     stock,
@@ -58,7 +94,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   } else {
     product.name = name;
     product.price = price;
-    product.image = "/images/productsImages/25.png";
+    product.image = "/images/productImages/sample.png";
     product.description = description;
     product.stock = stock;
     product.sold = sold;
@@ -93,6 +129,12 @@ const bestSeller = asyncHandler(async (req, res) => {
   res.status(200).json(bestSellingProducts);
 });
 
+// product categories
+const getProductsCategories = asyncHandler(async (req, res) => {
+  const productCategories = await Product.find().distinct("category");
+  res.status(200).json(productCategories);
+});
+
 module.exports = {
   getAllProducts,
   getSingleProduct,
@@ -100,4 +142,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   bestSeller,
+  getProductsCategories,
+  getProductsByCategory,
 };

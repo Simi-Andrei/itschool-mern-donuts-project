@@ -1,8 +1,12 @@
-const Title = ({ text }) => {
+const Title = ({ text, className }) => {
   return (
-    <h2 className="mt-4 mb-2 md:mb-10 font-light tracking-tighter text-3xl md:text-4xl text-center">
-      {text}
-    </h2>
+    <div
+      className={
+        `bg-white w-full rounded-sm shadow-sm shadow-stone-200 p-2 ` + className
+      }
+    >
+      <h2 className="tracking-tighter uppercase">{text}</h2>
+    </div>
   );
 };
 export default Title;
