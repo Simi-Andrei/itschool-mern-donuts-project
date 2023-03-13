@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaFilter } from "react-icons/fa";
-import { Title, Loader, Product, PageWrapper } from "../components/index";
+import { Heading, Loader, Product, Page, Wrapper } from "../components/index";
 import {
   getAllProducts,
   getProductCategories,
@@ -31,41 +31,29 @@ const Searchpage = () => {
   };
 
   return (
-    <PageWrapper>
-      <div className="relative">
-        <Title text="Products" className="pl-16" />
-        <button
-          className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-          onClick={() => navigate(-1)}
-        >
-          Back
-        </button>
-      </div>
-      <div className="flex flex-col md:flex-row items-start">
-        <div className="w-full md:hidden">
-          <div className="bg-white w-full h-10 mt-1 flex items-center justify-center text-xs xl:text-sm rounded-sm shadow-sm shadow-stone-200">
+    <Page>
+      <Heading text="Products" button address={-1} />
+      <div className="flex flex-col md:flex-row justify-between items-start">
+        <div className="md:hidden w-full">
+          <Wrapper>
             <button
-              className="w-full h-full flex items-center justify-center"
+              className="h-6 w-full flex items-center justify-center font-semibold focus:outline-black"
               onClick={() => setFilterMenuOpen(!filterMenuOpen)}
             >
               <FaFilter className="mr-1" />
               Filter
             </button>
-          </div>
+          </Wrapper>
           {filterMenuOpen && (
-            <div className="bg-white w-full flex flex-col items-start shadow-sm shadow-stone-200 mt-1 pb-2 md:w-1/4 xl:w-[22%] rounded-sm">
-              <h2 className="p-2 px-4 font-semibold text-xs">Categories</h2>
-              <div className="flex flex-col px-2 w-full">
+            <Wrapper>
+              <h2 className="p-2 font-semibold text-xs">Categories</h2>
+              <ul>
                 {categories.map((c) => (
-                  <li className="w-full flex text-xs xl:text-sm" key={c}>
+                  <li className="flex" key={c}>
                     <Link
                       onClick={() => setFilterMenuOpen(false)}
-                      className={`"block w-full mt-1 py-1 px-2 rounded-sm " ${
-                        c !== category && "hover:bg-stone-100"
-                      } ${
-                        c === category
-                          ? "bg-secondary text-white hover:bg-secondary"
-                          : ""
+                      className={`block w-full mt-1 py-1 px-2 rounded-sm ${
+                        c === category && "bg-secondary text-white "
                       }`}
                       to={filterUrl({ category: c })}
                     >
@@ -82,15 +70,15 @@ const Searchpage = () => {
                     </Link>
                   </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+            </Wrapper>
           )}
         </div>
-        <div className="bg-white hidden md:flex flex-col items-start shadow-sm shadow-stone-200 mt-1 px-2 mr-1 pb-8 md:w-1/4 xl:w-[22%] rounded-sm">
-          <h2 className="mb-2 p-2 font-semibold text-sm mt-1">Categories</h2>
-          <ul className="flex flex-col w-full">
+        <Wrapper className="hidden md:block md:w-[26.3%] xl:w-[22.3%]">
+          <h2 className="font-semibold text-sm mt-1 mb-2 px-2">Categories</h2>
+          <ul>
             {categories.map((c) => (
-              <li className="w-full flex text-xs xl:text-sm" key={c}>
+              <li className="w-full flex" key={c}>
                 <Link
                   className={`"block w-full mt-1 py-1 px-2 rounded-sm " ${
                     c !== category && "hover:bg-stone-100"
@@ -113,9 +101,9 @@ const Searchpage = () => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="w-full md:w-3/4 xl:w-[78%]">
-          <div className="bg-white flex items-center justify-center md:justify-start h-10 shadow-sm text-xs md:text-sm shadow-stone-200 mt-1 p-2 rounded-sm">
+        </Wrapper>
+        <div className="w-full md:w-[73.3%] xl:w-[77.3%]">
+          <Wrapper className="flex items-center justify-center md:justify-start h-10">
             <span className="mr-2 font-semibold">Sort by</span>
             <select
               value={order}
@@ -129,7 +117,7 @@ const Searchpage = () => {
               <option value="low">Price low to high</option>
               <option value="high">Price high to low</option>
             </select>
-          </div>
+          </Wrapper>
           {loading ? (
             <Loader />
           ) : error ? (
@@ -137,7 +125,7 @@ const Searchpage = () => {
               <p>{message}</p>
             </div>
           ) : (
-            <div className="flex flex-wrap justify-between mt-1">
+            <div className="flex flex-wrap justify-between">
               {products.map((product) => (
                 <Product key={product._id} product={product} />
               ))}
@@ -145,7 +133,7 @@ const Searchpage = () => {
           )}
         </div>
       </div>
-    </PageWrapper>
+    </Page>
   );
 };
 export default Searchpage;

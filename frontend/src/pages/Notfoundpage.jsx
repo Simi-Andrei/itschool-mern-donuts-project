@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { PageWrapper } from "../components/index";
+import { Page } from "../components/index";
 
 const Notfoundpage = () => {
   return (
-    <PageWrapper>
+    <Page>
       <div className="w-full h-[500px] flex flex-col items-center justify-center p-2 lg:p-4">
         <div className="relative mt-36">
           <p className="mt-2 font-semibold text-secondary text-7xl">404</p>
@@ -23,7 +23,7 @@ const Notfoundpage = () => {
           Take me home
         </Link>
       </div>
-    </PageWrapper>
+    </Page>
   );
 };
 export default Notfoundpage;

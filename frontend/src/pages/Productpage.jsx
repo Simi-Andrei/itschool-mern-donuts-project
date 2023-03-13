@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Title, Rating, Loader, PageWrapper } from "../components/index";
+import { Heading, Rating, Loader, Page, Wrapper } from "../components/index";
 import { BsHeartFill } from "react-icons/bs";
 import { getSingleProduct } from "../features/product/productSlice";
 import { addItemToCart } from "../features/cart/cartSlice";
@@ -15,7 +15,6 @@ const Productpage = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { product, loading, error, message } = useSelector(
     (state) => state.product
@@ -53,7 +52,7 @@ const Productpage = () => {
   };
 
   return (
-    <PageWrapper>
+    <Page>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -62,16 +61,8 @@ const Productpage = () => {
         </div>
       ) : (
         <>
-          <div className="relative">
-            <Title text={`${product.name}`} className="pl-16" />
-            <button
-              className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </button>
-          </div>
-          <div className="flex flex-wrap flex-col md:flex-row items-start justify-between static md:relative rounded-sm bg-white shadow-sm shadow-stone-200 mt-1">
+          <Heading text={`${product.name}`} button address={-1} />
+          <Wrapper className="flex flex-wrap flex-col md:flex-row items-start justify-between static md:relative">
             <div className="w-full md:w-[49.5%] p-2 py-10 grid place-items-center relative md:static">
               <img
                 src={product.image}
@@ -85,7 +76,7 @@ const Productpage = () => {
                 <BsHeartFill fill="#a8a29e" />
               </button>
             </div>
-            <div className="w-full md:w-[49.5%] p-2 md:py-10 text-xs xl:text-sm h-full">
+            <div className="w-full md:w-[49.5%] p-2 md:py-10 h-full">
               <p className="md:mt-2">
                 <span className="font-semibold">Description: </span>
                 {product.description}
@@ -109,7 +100,7 @@ const Productpage = () => {
               </p>
               <button
                 onClick={() => addItemToCartHandler(product._id)}
-                className="w-full md:w-1/2 bg-stone-900 rounded-sm uppercase text-white text-xs font-light py-2 my-2 disabled:bg-stone-500"
+                className="w-full md:w-1/2 bg-stone-900 rounded-sm uppercase text-white text-xs py-2 my-2 hover:bg-stone-800 disabled:bg-stone-500"
                 disabled={product.stock === 0}
               >
                 {product.stock === 0 ? "Out of stock" : "Add to cart"}
@@ -128,10 +119,10 @@ const Productpage = () => {
                   : "watches"}
               </p>
             </div>
-          </div>
+          </Wrapper>
         </>
       )}
-    </PageWrapper>
+    </Page>
   );
 };
 export default Productpage;

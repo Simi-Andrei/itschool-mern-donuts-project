@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Title, Loader, PageWrapper } from "../components/index";
+import { Heading, Loader, Page, Wrapper } from "../components/index";
 import { FaCheck, FaTimes, FaEdit } from "react-icons/fa";
 import { BsTrash } from "react-icons/bs";
 import { getAllUsers, deleteUser, reset } from "../features/user/userSlice";
@@ -34,16 +34,8 @@ const Userslistpage = () => {
   };
 
   return (
-    <PageWrapper>
-      <div className="relative">
-        <Title text="Users" className="pl-16" />
-        <button
-          className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-          onClick={() => navigate(-1)}
-        >
-          Back
-        </button>
-      </div>
+    <Page>
+      <Heading text="Users" button address={-1} />
       {loading ? (
         <Loader />
       ) : error ? (
@@ -52,8 +44,8 @@ const Userslistpage = () => {
         </div>
       ) : (
         <>
-          <div className="flex flex-col bg-white shadow-sm shadow-stone-200 p-2 mt-1">
-            <div className="overflow-x-auto text-xs xl:text-sm">
+          <Wrapper>
+            <div className="overflow-x-auto">
               <div className="inline-block min-w-full py-2">
                 <div className="overflow-hidden">
                   <table className="min-w-full text-left font-light">
@@ -113,10 +105,10 @@ const Userslistpage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </Wrapper>
         </>
       )}
-    </PageWrapper>
+    </Page>
   );
 };
 export default Userslistpage;

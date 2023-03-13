@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { BsArrowRight } from "react-icons/bs";
-import { Title, Loader, PageWrapper } from "../components/index";
+import { Heading, Loader, Page, Wrapper } from "../components/index";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import {
   getOrder,
@@ -61,7 +61,7 @@ const Orderpage = () => {
   };
 
   return (
-    <PageWrapper>
+    <Page>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -71,8 +71,12 @@ const Orderpage = () => {
       ) : (
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-[64.2%]">
-            <Title text={`Order no ${order._id}`} />
-            <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+            <Heading
+              text={`Order no ${order._id}`}
+              button
+              address={"/profile"}
+            />
+            <Wrapper>
               <p className="mb-1">
                 <strong>Name: </strong>
                 <span>{order.user && order.user.name}</span>
@@ -99,8 +103,8 @@ const Orderpage = () => {
                 <strong>Payment method: </strong>
                 {order.paymentMethod}
               </p>
-            </div>
-            <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+            </Wrapper>
+            <Wrapper>
               <span>
                 <strong>Delivery status</strong>
               </span>
@@ -111,8 +115,8 @@ const Orderpage = () => {
               ) : (
                 <p className="text-rose-400">Not delivered</p>
               )}
-            </div>
-            <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+            </Wrapper>
+            <Wrapper>
               <span>
                 <strong>Payment status</strong>
               </span>
@@ -123,8 +127,8 @@ const Orderpage = () => {
               ) : (
                 <p className="text-rose-400">Not paid</p>
               )}
-            </div>
-            <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+            </Wrapper>
+            <Wrapper>
               <span>
                 <strong>Products</strong>
               </span>
@@ -154,11 +158,11 @@ const Orderpage = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </Wrapper>
           </div>
           <div className="w-full mt-1 md:mt-0 md:w-[35.4%]">
-            <Title text="Total" />
-            <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+            <Heading text="Total" />
+            <Wrapper>
               {order.items.length > 0 && (
                 <div className="flex flex-col">
                   <div className="flex items-center justify-between my-2">
@@ -232,11 +236,11 @@ const Orderpage = () => {
                   )}
                 </div>
               )}
-            </div>
+            </Wrapper>
           </div>
         </div>
       )}
-    </PageWrapper>
+    </Page>
   );
 };
 export default Orderpage;

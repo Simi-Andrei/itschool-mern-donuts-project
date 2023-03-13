@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { PageWrapper } from "../components/index";
+import { Page } from "../components/index";
 import * as Yup from "yup";
 import { login, reset } from "../features/user/userSlice";
 
@@ -49,7 +49,7 @@ const Loginpage = () => {
   });
 
   return (
-    <PageWrapper>
+    <Page>
       <div className="bg-white p-10 text-stone-900 relative shadow-shadow mt-20 flex flex-col items-center justify-start w-full max-w-[320px] mx-auto">
         <div
           className="bg-secondary p-1 absolute top-0 left-[50%]
@@ -129,7 +129,7 @@ const Loginpage = () => {
           </div>
         </form>
       </div>
-    </PageWrapper>
+    </Page>
   );
 };
 export default Loginpage;

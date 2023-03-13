@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Title, Loader, PageWrapper } from "../components/index";
+import { Heading, Loader, Page, Wrapper } from "../components/index";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import {
   getAllProducts,
@@ -39,16 +39,8 @@ const Productslistpage = () => {
   };
 
   return (
-    <PageWrapper>
-      <div className="relative">
-        <Title text="Products" className="pl-16" />
-        <button
-          className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-          onClick={() => navigate(-1)}
-        >
-          Back
-        </button>
-      </div>
+    <Page>
+      <Heading text="Products" button address={-1} />
       {loading ? (
         <Loader />
       ) : error ? (
@@ -57,8 +49,8 @@ const Productslistpage = () => {
         </div>
       ) : (
         <>
-          <div className="flex flex-col p-2 bg-white shadow-sm shadow-stone-200 mt-1">
-            <div className="overflow-x-auto text-xs xl:text-sm">
+          <Wrapper>
+            <div className="overflow-x-auto">
               <div className="inline-block min-w-full py-2">
                 <div className="overflow-hidden">
                   <table className="min-w-full text-left font-light">
@@ -111,10 +103,10 @@ const Productslistpage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </Wrapper>
         </>
       )}
-    </PageWrapper>
+    </Page>
   );
 };
 export default Productslistpage;

@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
-import Title from "../components/Title";
+import { Link } from "react-router-dom";
+import Heading from "../components/Heading";
 import { BsArrowRight, BsHeartFill } from "react-icons/bs";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { Rating, PageWrapper } from "../components/index";
+import { Rating, Page } from "../components/index";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../features/cart/cartSlice";
@@ -10,7 +10,6 @@ import { removeItemFromFavorites } from "../features/favorites/favoritesSlice";
 
 const Favoritespage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { favoriteItems } = useSelector((state) => state.favorites);
 
@@ -31,7 +30,7 @@ const Favoritespage = () => {
   };
 
   return (
-    <PageWrapper>
+    <Page>
       {favoriteItems.length === 0 ? (
         <div className="bg-white h-64 w-full flex flex-col items-center justify-center shadow-sm shadow-stone-200">
           <div className="flex flex-col lg:flex-row items-center">
@@ -51,15 +50,7 @@ const Favoritespage = () => {
         </div>
       ) : (
         <div>
-          <div className="relative">
-            <Title text="Favorites" className="pl-16" />
-            <button
-              className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </button>
-          </div>
+          <Heading text="Favorites" button address={-1} />
           <div className="flex flex-wrap items-start justify-between mt-1">
             {favoriteItems.map((product) => (
               <div
@@ -119,7 +110,7 @@ const Favoritespage = () => {
           </div>
         </div>
       )}
-    </PageWrapper>
+    </Page>
   );
 };
 export default Favoritespage;

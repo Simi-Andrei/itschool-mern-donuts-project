@@ -1,7 +1,8 @@
+import Page from "./Page";
+import Heading from "./Heading";
 import Loader from "./Loader";
-import PageWrapper from "./PageWrapper";
 import Product from "./Product";
-import Title from "./Title";
 import Rating from "./Rating";
+import Wrapper from "./Wrapper";
 
-export { Loader, PageWrapper, Product, Title, Rating };
+export { Heading, Loader, Page, Product, Rating, Wrapper };

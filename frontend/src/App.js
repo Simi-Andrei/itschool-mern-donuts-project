@@ -1,24 +1,26 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Homepage from "./pages/Homepage";
-import Categoriespage from "./pages/Categoriespage";
-import Searchpage from "./pages/Searchpage";
-import Favoritespage from "./pages/Favoritespage";
-import Productpage from "./pages/Productpage";
-import Cartpage from "./pages/Cartpage";
-import Checkoutpage from "./pages/Checkoutpage";
-import Placeorderpage from "./pages/Placeorderpage";
-import Orderpage from "./pages/Orderpage";
-import Profilepage from "./pages/Profilepage";
-import Loginpage from "./pages/Loginpage";
-import Registerpage from "./pages/Registerpage";
-import Userslistpage from "./pages/Userslistpage";
-import Usereditpage from "./pages/Usereditpage";
-import Productslistpage from "./pages/Productslistpage";
-import Producteditpage from "./pages/Producteditpage";
-import Orderslistpage from "./pages/Orderslistpage";
-import Notfoundpage from "./pages/Notfoundpage";
+import {
+  Homepage,
+  Categoriespage,
+  Searchpage,
+  Favoritespage,
+  Productpage,
+  Cartpage,
+  Checkoutpage,
+  Placeorderpage,
+  Orderpage,
+  Profilepage,
+  Loginpage,
+  Registerpage,
+  Userslistpage,
+  Usereditpage,
+  Productslistpage,
+  Producteditpage,
+  Orderslistpage,
+  Notfoundpage,
+} from "./pages/index";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";

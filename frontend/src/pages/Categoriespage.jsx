@@ -1,23 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { PageWrapper, Title } from "../components/index";
+import { Heading, Page } from "../components/index";
 
 const Categoriespage = () => {
-  const navigate = useNavigate();
-
   const { categories } = useSelector((state) => state.product);
 
   return (
-    <PageWrapper>
-      <div className="relative">
-        <Title text="Categories" className="pl-16" />
-        <button
-          className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-          onClick={() => navigate(-1)}
-        >
-          Back
-        </button>
-      </div>
+    <Page>
+      <Heading text="Categories" button address={-1} />
       <div className="flex flex-wrap items-start justify-between mt-1">
         {categories.map((category) => {
           switch (category) {
@@ -114,7 +104,7 @@ const Categoriespage = () => {
           }
         })}
       </div>
-    </PageWrapper>
+    </Page>
   );
 };
 export default Categoriespage;

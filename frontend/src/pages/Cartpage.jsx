@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BsArrowRight, BsTrash } from "react-icons/bs";
-import { Title, PageWrapper } from "../components/index";
+import { Heading, Page, Wrapper } from "../components/index";
 import { removeItemFromCart, clearCart } from "../features/cart/cartSlice";
 
 const Cartpage = () => {
@@ -39,7 +39,7 @@ const Cartpage = () => {
   };
 
   return (
-    <PageWrapper>
+    <Page>
       <div className="flex flex-wrap justify-between items-start">
         {cartItems.length === 0 ? (
           <div className="bg-white h-64 w-full flex flex-col items-center justify-center shadow-sm shadow-stone-200">
@@ -61,19 +61,11 @@ const Cartpage = () => {
         ) : (
           <>
             <div className="w-full md:w-[64.2%]">
-              <div className="relative">
-                <Title text="Cart" className="pl-16" />
-                <button
-                  className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-                  onClick={() => navigate(-1)}
-                >
-                  Back
-                </button>
-              </div>
+              <Heading text="Cart" button address={-1} />
               {cartItems.map((item) => (
-                <div
+                <Wrapper
                   key={item._id}
-                  className="flex items-center justify-between mt-1 p-2 text-xs xl:text-sm bg-white shadow-sm shadow-stone-200"
+                  className="flex items-center justify-between"
                 >
                   <div className="w-[20%] md:w-[25%] grid place-items-center">
                     <img src={item.image} alt="product" width={50} />
@@ -106,7 +98,7 @@ const Cartpage = () => {
                       Remove
                     </button>
                   </div>
-                </div>
+                </Wrapper>
               ))}
               <div className="text-xs xl:text-sm">
                 <button
@@ -118,9 +110,9 @@ const Cartpage = () => {
               </div>
             </div>
             <div className="w-full md:w-[35.4%] mt-1 md:mt-0">
-              <Title text="Total" />
+              <Heading text="Total" />
               {cartItems.length > 0 && (
-                <div className="flex flex-col mt-1 p-2 text-xs xl:text-sm bg-white shadow-sm shadow-stone-200">
+                <Wrapper>
                   <div className="flex items-center justify-between my-2">
                     <p>Products price:</p>
                     <p className="font-semibold">${itemsPrice.toFixed(2)}</p>
@@ -149,13 +141,13 @@ const Cartpage = () => {
                       Checkout
                     </button>
                   </div>
-                </div>
+                </Wrapper>
               )}
             </div>
           </>
         )}
       </div>
-    </PageWrapper>
+    </Page>
   );
 };
 export default Cartpage;

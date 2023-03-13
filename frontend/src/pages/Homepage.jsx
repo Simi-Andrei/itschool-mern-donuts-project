@@ -1,6 +1,6 @@
-import { PageWrapper } from "../components/index";
+import { Page } from "../components/index";
 
 const Homepage = () => {
-  return <PageWrapper></PageWrapper>;
+  return <Page></Page>;
 };
 export default Homepage;

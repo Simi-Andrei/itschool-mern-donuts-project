@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Title, PageWrapper } from "../components/index";
+import { Heading, Page, Wrapper } from "../components/index";
 import { placeOrder, reset } from "../features/order/orderSlice";
 import { clearCart } from "../features/cart/cartSlice";
 
@@ -38,13 +38,13 @@ const Placeorderpage = () => {
         totalPrice: totalPrice.toFixed(2),
       })
     );
-    dispatch(clearCart());
   };
 
   useEffect(() => {
     if (success && order._id) {
       dispatch(reset());
       navigate(`/orders/${order._id}`);
+      dispatch(clearCart());
       toast.success("Order placed", {
         position: "top-center",
         autoClose: 2000,
@@ -55,19 +55,11 @@ const Placeorderpage = () => {
   }, [dispatch, navigate, success, order, currentUser]);
 
   return (
-    <PageWrapper>
+    <Page>
       <div className="flex flex-wrap justify-between">
         <div className="w-full md:w-[64.2%]">
-          <div className="relative">
-            <Title text="Summary" className="pl-16" />
-            <button
-              className="absolute top-2 -left-1 py-0.5 px-3 rounded-tr-md rounded-br-md rounded-tl-sm rounded-bl-sm bg-stone-900 text-white text-sm"
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </button>
-          </div>
-          <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+          <Heading text="Summary" button address={-1} />
+          <Wrapper>
             <span>
               <strong>Delivery address</strong>
             </span>
@@ -77,14 +69,14 @@ const Placeorderpage = () => {
               <span>{deliveryAddress.postalCode}</span>,{" "}
               <span>{deliveryAddress.country}</span>
             </p>
-          </div>
-          <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+          </Wrapper>
+          <Wrapper>
             <span>
               <strong>Payment method</strong>
             </span>
             <p>{paymentMethod}</p>
-          </div>
-          <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+          </Wrapper>
+          <Wrapper>
             <span>
               <strong>Products</strong>
             </span>
@@ -114,11 +106,11 @@ const Placeorderpage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </Wrapper>
         </div>
         <div className="w-full mt-1 md:mt-0 md:w-[35.4%]">
-          <Title text="Total" />
-          <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
+          <Heading text="Total" />
+          <Wrapper>
             {cartItems.length > 0 && (
               <div className="flex flex-col">
                 <div className="flex items-center justify-between my-2">
@@ -150,10 +142,10 @@ const Placeorderpage = () => {
                 </div>
               </div>
             )}
-          </div>
+          </Wrapper>
         </div>
       </div>
-    </PageWrapper>
+    </Page>
   );
 };
 export default Placeorderpage;
