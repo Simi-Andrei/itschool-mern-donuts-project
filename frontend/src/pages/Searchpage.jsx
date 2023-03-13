@@ -43,9 +43,9 @@ const Searchpage = () => {
       </div>
       <div className="flex flex-col md:flex-row items-start">
         <div className="w-full md:hidden">
-          <div className="bg-white w-full h-10 mt-1 flex items-center justify-center text-sm rounded-sm shadow-sm shadow-stone-200">
+          <div className="bg-white w-full h-10 mt-1 flex items-center justify-center text-xs xl:text-sm rounded-sm shadow-sm shadow-stone-200">
             <button
-              className="w-full h-full text-sm font-semibold flex items-center justify-center"
+              className="w-full h-full flex items-center justify-center"
               onClick={() => setFilterMenuOpen(!filterMenuOpen)}
             >
               <FaFilter className="mr-1" />
@@ -53,12 +53,13 @@ const Searchpage = () => {
             </button>
           </div>
           {filterMenuOpen && (
-            <div className="bg-white w-full flex flex-col items-start shadow-sm shadow-stone-200 mt-1 mr-1 pb-8 md:w-1/4 xl:w-[22%] rounded-sm">
-              <h2 className="p-2 px-4 font-semibold">Categories</h2>
+            <div className="bg-white w-full flex flex-col items-start shadow-sm shadow-stone-200 mt-1 pb-2 md:w-1/4 xl:w-[22%] rounded-sm">
+              <h2 className="p-2 px-4 font-semibold text-xs">Categories</h2>
               <div className="flex flex-col px-2 w-full">
                 {categories.map((c) => (
-                  <li className="w-full flex" key={c}>
+                  <li className="w-full flex text-xs xl:text-sm" key={c}>
                     <Link
+                      onClick={() => setFilterMenuOpen(false)}
                       className={`"block w-full mt-1 py-1 px-2 rounded-sm " ${
                         c !== category && "hover:bg-stone-100"
                       } ${
@@ -75,7 +76,7 @@ const Searchpage = () => {
                         : c === "speakers"
                         ? "Speakers"
                         : "Watches"}{" "}
-                      <span className="text-xs">
+                      <span className="text-xxs">
                         ({products.length} products)
                       </span>
                     </Link>
@@ -86,10 +87,10 @@ const Searchpage = () => {
           )}
         </div>
         <div className="bg-white hidden md:flex flex-col items-start shadow-sm shadow-stone-200 mt-1 px-2 mr-1 pb-8 md:w-1/4 xl:w-[22%] rounded-sm">
-          <h2 className="mb-2 p-2 font-semibold text-sm mt-0.5">Categories</h2>
+          <h2 className="mb-2 p-2 font-semibold text-sm mt-1">Categories</h2>
           <ul className="flex flex-col w-full">
             {categories.map((c) => (
-              <li className="w-full flex" key={c}>
+              <li className="w-full flex text-xs xl:text-sm" key={c}>
                 <Link
                   className={`"block w-full mt-1 py-1 px-2 rounded-sm " ${
                     c !== category && "hover:bg-stone-100"
@@ -107,21 +108,21 @@ const Searchpage = () => {
                     : c === "speakers"
                     ? "Speakers"
                     : "Watches"}{" "}
-                  <span className="text-xs">({products.length} products)</span>
+                  <span className="text-xxs">({products.length} products)</span>
                 </Link>
               </li>
             ))}
           </ul>
         </div>
         <div className="w-full md:w-3/4 xl:w-[78%]">
-          <div className="bg-white flex items-center justify-center md:justify-start h-10 shadow-sm shadow-stone-200 mt-1 p-2 rounded-sm">
-            <span className="mr-2 text-sm font-semibold">Sort by</span>
+          <div className="bg-white flex items-center justify-center md:justify-start h-10 shadow-sm text-xs md:text-sm shadow-stone-200 mt-1 p-2 rounded-sm">
+            <span className="mr-2 font-semibold">Sort by</span>
             <select
               value={order}
               onChange={(e) => navigate(filterUrl({ order: e.target.value }))}
               name="order"
               id="order"
-              className="border border-stone-200 px-6 py-1 text-sm"
+              className="border border-stone-200 px-6 py-1 focus:outline-black"
             >
               <option value="newest">Newest</option>
               <option value="rated">Top rated</option>
@@ -136,7 +137,7 @@ const Searchpage = () => {
               <p>{message}</p>
             </div>
           ) : (
-            <div className="flex flex-wrap justify-between">
+            <div className="flex flex-wrap justify-between mt-1">
               {products.map((product) => (
                 <Product key={product._id} product={product} />
               ))}

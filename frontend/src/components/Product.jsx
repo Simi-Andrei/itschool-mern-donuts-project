@@ -48,7 +48,7 @@ const Product = ({ product }) => {
             <img
               src={product.image}
               alt="product"
-              className="w-[100px] h-[100px] lg:w-[140px] lg:h-[140px]"
+              className="w-[90px] md:w-[90px] lg:w-[140px]"
             />
           </Link>
         </div>
@@ -82,7 +82,7 @@ const Product = ({ product }) => {
       </div>
       <button
         onClick={() => toggleFavoriteItemHandler(product._id)}
-        className="absolute top-0 right-0 rounded-sm mt-2 mr-2 p-2 shadow-inner"
+        className="absolute top-0 right-0 rounded-sm mt-2 mr-2 p-2 shadow-inner bg-white"
       >
         <BsHeartFill fill="#a8a29e" />
       </button>

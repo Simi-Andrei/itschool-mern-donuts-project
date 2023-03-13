@@ -72,7 +72,7 @@ const Favoritespage = () => {
                       <img
                         src={product.image}
                         alt="product"
-                        className="w-[100px] h-[100px] lg:w-[140px] lg:h-[140px]"
+                        className="w-[90px] md:w-[90px] lg:w-[140px]"
                       />
                     </Link>
                   </div>

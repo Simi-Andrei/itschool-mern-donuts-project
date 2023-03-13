@@ -57,7 +57,7 @@ const Placeorderpage = () => {
   return (
     <PageWrapper>
       <div className="flex flex-wrap justify-between">
-        <div className="w-full md:w-[70.8%]">
+        <div className="w-full md:w-[64.2%]">
           <div className="relative">
             <Title text="Summary" className="pl-16" />
             <button
@@ -92,7 +92,7 @@ const Placeorderpage = () => {
               {cartItems.map((item) => (
                 <div
                   key={item._id}
-                  className="flex items-center justify-between mt-6 pb-2 border-b border-b-secondary last:border-b-0 text-xs xl:text-sm"
+                  className="flex items-center justify-between mt-2 pb-2 border-b border-b-secondary last:border-b-0 text-xs xl:text-sm"
                 >
                   <div className="w-3/12 grid place-items-center">
                     <img src={item.image} alt="product" width={50} />
@@ -116,7 +116,7 @@ const Placeorderpage = () => {
             </div>
           </div>
         </div>
-        <div className="w-full mt-1 md:mt-0 md:w-[28.8%]">
+        <div className="w-full mt-1 md:mt-0 md:w-[35.4%]">
           <Title text="Total" />
           <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
             {cartItems.length > 0 && (

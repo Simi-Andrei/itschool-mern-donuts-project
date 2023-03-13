@@ -60,7 +60,7 @@ const Cartpage = () => {
           </div>
         ) : (
           <>
-            <div className="w-full md:w-[70.8%]">
+            <div className="w-full md:w-[64.2%]">
               <div className="relative">
                 <Title text="Cart" className="pl-16" />
                 <button
@@ -117,7 +117,7 @@ const Cartpage = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full mt-1 md:mt-0 md:w-[28.8%]">
+            <div className="w-full md:w-[35.4%] mt-1 md:mt-0">
               <Title text="Total" />
               {cartItems.length > 0 && (
                 <div className="flex flex-col mt-1 p-2 text-xs xl:text-sm bg-white shadow-sm shadow-stone-200">

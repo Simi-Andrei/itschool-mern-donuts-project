@@ -70,7 +70,7 @@ const Orderpage = () => {
         </div>
       ) : (
         <div className="flex flex-wrap justify-between">
-          <div className="w-full md:w-[70.8%]">
+          <div className="w-full md:w-[64.2%]">
             <Title text={`Order no ${order._id}`} />
             <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
               <p className="mb-1">
@@ -156,7 +156,7 @@ const Orderpage = () => {
               </div>
             </div>
           </div>
-          <div className="w-full mt-1 md:mt-0 md:w-[28.8%]">
+          <div className="w-full mt-1 md:mt-0 md:w-[35.4%]">
             <Title text="Total" />
             <div className="bg-white shadow-sm shadow-stone-200 mt-1 text-xs xl:text-sm p-2">
               {order.items.length > 0 && (
