@@ -44,15 +44,15 @@ const Product = ({ product }) => {
     <div className="w-full md:w-[32.6%] xl:w-[24.5%]">
       <Wrapper className="pt-6 relative">
         <div className="flex items-start justify-between md:block">
-          <div className="grid place-items-center">
-            <Link to={`/product/${product._id}`}>
+          <Link to={`/product/${product._id}`}>
+            <div className="grid place-items-center">
               <img
                 src={product.image}
                 alt="product"
                 className="w-[90px] md:w-[90px] lg:w-[140px]"
               />
-            </Link>
-          </div>
+            </div>
+          </Link>
           <div className="text-right md:text-left mt-2 md:mt-0">
             <Link
               to={`/product/${product._id}`}

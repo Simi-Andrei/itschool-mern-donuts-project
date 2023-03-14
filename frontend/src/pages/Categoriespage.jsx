@@ -1,8 +1,17 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Heading, Page } from "../components/index";
+import { getProductCategories } from "../features/product/productSlice";
 
 const Categoriespage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductCategories());
+  }, [dispatch]);
+
   const { categories } = useSelector((state) => state.product);
 
   return (
@@ -89,6 +98,48 @@ const Categoriespage = () => {
                       <img
                         src="/images/productImages/speaker1.png"
                         alt="speaker"
+                        className="w-[100px] md:w-[120px] xl:w-[130px]"
+                      />
+                    </div>
+                  </div>
+                </Link>
+              );
+            case "mouses":
+              return (
+                <Link
+                  className="w-full md:w-[49.85%] group mb-0.5"
+                  key={category}
+                  to="/search/category/mouses"
+                >
+                  <div className="category-item group-hover:brightness-95 rounded-sm bg-white grid place-items-center h-44 border relative shadow-sm shadow-stone-200">
+                    <p className="absolute bottom-1 left-2 uppercase text-white">
+                      Mouses
+                    </p>
+                    <div className="bg-white rounded-full p-3">
+                      <img
+                        src="/images/productImages/mouse1.png"
+                        alt="mouse"
+                        className="w-[100px] md:w-[120px] xl:w-[130px]"
+                      />
+                    </div>
+                  </div>
+                </Link>
+              );
+            case "webcams":
+              return (
+                <Link
+                  className="w-full md:w-[49.85%] group mb-0.5"
+                  key={category}
+                  to="/search/category/webcams"
+                >
+                  <div className="category-item group-hover:brightness-95 rounded-sm bg-white grid place-items-center h-44 border relative shadow-sm shadow-stone-200">
+                    <p className="absolute bottom-1 left-2 uppercase text-white">
+                      Webcams
+                    </p>
+                    <div className="bg-white rounded-full p-3">
+                      <img
+                        src="/images/productImages/webcam1.png"
+                        alt="webcam"
                         className="w-[100px] md:w-[120px] xl:w-[130px]"
                       />
                     </div>

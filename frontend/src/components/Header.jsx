@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsChevronDown, BsHeart } from "react-icons/bs";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { logout, reset } from "../features/user/userSlice";
-import { getProductCategories } from "../features/product/productSlice";
 
 const Header = () => {
   const [accMenuOpen, setAccMenuOpen] = useState(false);
@@ -23,10 +22,6 @@ const Header = () => {
     (acc, item) => (acc += item.quantity),
     0
   );
-
-  useEffect(() => {
-    dispatch(getProductCategories());
-  }, [dispatch]);
 
   const logoutHandler = () => {
     dispatch(logout());

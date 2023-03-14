@@ -63,6 +63,10 @@ const Searchpage = () => {
                         ? "Headsets"
                         : c === "speakers"
                         ? "Speakers"
+                        : c === "mouses"
+                        ? "Mouses"
+                        : c === "webcams"
+                        ? "Webcams"
                         : "Watches"}{" "}
                       <span className="text-xxs">
                         ({products.length} products)
@@ -95,6 +99,10 @@ const Searchpage = () => {
                     ? "Headsets"
                     : c === "speakers"
                     ? "Speakers"
+                    : c === "mouses"
+                    ? "Mouses"
+                    : c === "webcams"
+                    ? "Webcams"
                     : "Watches"}{" "}
                   <span className="text-xxs">({products.length} products)</span>
                 </Link>

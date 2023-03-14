@@ -115,8 +115,12 @@ const Productpage = () => {
                   : product.category === "onEarHeadsets"
                   ? "Headsets"
                   : product.category === "speakers"
-                  ? "speakers"
-                  : "watches"}
+                  ? "Speakers"
+                  : product.category === "mouses"
+                  ? "Mouses"
+                  : product.category === "webcams"
+                  ? "Webcams"
+                  : "Watches"}
               </p>
             </div>
           </Wrapper>
