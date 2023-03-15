@@ -3,9 +3,9 @@ import productService from "./productService";
 
 const initialState = {
   products: [],
+  product: {},
   topProducts: [],
   productsByCategory: [],
-  product: {},
   categories: [],
   loading: false,
   success: false,
@@ -148,6 +148,9 @@ export const productSlice = createSlice({
     reset: (state) => {
       state.products = [];
       state.product = {};
+      state.topProducts = [];
+      state.productsByCategory = [];
+      state.categories = [];
       state.loading = false;
       state.success = false;
       state.error = false;

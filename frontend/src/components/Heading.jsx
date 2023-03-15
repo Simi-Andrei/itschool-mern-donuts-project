@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const Heading = ({ text, className, button, address }) => {
+const Heading = ({ text, className, button, address, optionalText }) => {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +12,9 @@ const Heading = ({ text, className, button, address }) => {
           } ` + className
         }
       >
-        <h2 className="tracking-tighter uppercase">{text}</h2>
+        <h2 className="tracking-tighter uppercase">
+          {text} <span className="text-xs lowercase ml-1">{optionalText}</span>
+        </h2>
       </div>
       {button && (
         <button

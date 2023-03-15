@@ -118,7 +118,7 @@ const Searchpage = () => {
               onChange={(e) => navigate(filterUrl({ order: e.target.value }))}
               name="order"
               id="order"
-              className="border border-stone-200 px-6 py-1 focus:outline-black"
+              className="border border-stone-200 px-6 py-1 focus:outline-black cursor-pointer rounded-sm"
             >
               <option value="newest">Newest</option>
               <option value="rated">Top rated</option>

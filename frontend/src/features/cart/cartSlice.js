@@ -63,6 +63,8 @@ export const cartSlice = createSlice({
     },
     reset: (state) => {
       state.cartItems = [];
+      state.deliveryAddress = {};
+      state.paymentMethod = "";
       state.loading = false;
       state.success = false;
       state.error = false;

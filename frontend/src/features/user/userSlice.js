@@ -174,6 +174,7 @@ export const userSlice = createSlice({
     },
     reset: (state) => {
       state.user = {};
+      state.users = [];
       state.loading = false;
       state.success = false;
       state.error = false;
